@@ -26,20 +26,26 @@ namespace crdx.Settings
               _filePath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath),
                   string.Format("{0}.settings", ApplicationName));
           }
+
+          if(_machineName == null)
+          {
+              _machineName = Environment.MachineName.ToLowerInvariant();
+          }
       }
 
       public static string _filePath { get; set; }
+      public static string _machineName { get; set; }
 
       private XmlNode _localSettingsNode
       {
          get
          {
             XmlNode settingsNode = GetSettingsNode(_localSettingsNodeName);
-            XmlNode machineNode = settingsNode.SelectSingleNode(Environment.MachineName.ToLowerInvariant());
+            XmlNode machineNode = settingsNode.SelectSingleNode(_machineName);
 
             if (machineNode == null)
             {
-               machineNode = _rootDocument.CreateElement(Environment.MachineName.ToLowerInvariant());
+               machineNode = _rootDocument.CreateElement(_machineName);
                settingsNode.AppendChild(machineNode);
             }
 
