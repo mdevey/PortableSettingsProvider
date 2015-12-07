@@ -18,14 +18,17 @@ namespace crdx.Settings
       private const string _className = "PortableSettingsProvider";
       private XmlDocument _xmlDocument;
 
-      private string _filePath
+      public PortableSettingsProvider()
       {
-         get
-         {
-            return Path.Combine(Path.GetDirectoryName(Application.ExecutablePath),
-               string.Format("{0}.settings", ApplicationName));
-         }
+          //If the static has not been set before creation.
+          if (_filePath == null)
+          {
+              _filePath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath),
+                  string.Format("{0}.settings", ApplicationName));
+          }
       }
+
+      public static string _filePath { get; set; }
 
       private XmlNode _localSettingsNode
       {
