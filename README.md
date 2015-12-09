@@ -10,6 +10,14 @@
 
    ![The Properties Dialog](https://raw.github.com/crdx/PortableSettingsProvider/master/static/setting-properties.png)
 
+   1. **Alternatively** if *most* settings are portable set System.Configuration.LocalFileSettingsProvider as the `Provider` for the *few* non-portable settings and edit Settings.cs to default the SettingsProviderAttribute.
+   ```
+   namespace MyApp.Properties {
+       //Do not use System.Configuration.LocalFileSettingsProvider by default.
+       [System.Configuration.SettingsProviderAttribute(typeof(crdx.Settings.PortableSettingsProvider))]
+       public sealed partial class Settings {
+   ```
+
 3. Optionally, set the `Roaming` property to `True` for global settings, or `False` for local settings. (See **Types** below for an explanation.) 
 
    Visual Studio currently defaults this to `False`.
